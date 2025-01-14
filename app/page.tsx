@@ -1,101 +1,144 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Plus, Search, Home, User } from 'lucide-react'
+import Link from "next/link"
+import Image from "next/image"
+
+export default function HomePage() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="min-h-screen bg-gray-50 text-gray-900">
+      <div className="max-w-7xl mx-auto h-screen flex flex-col">
+        {/* Header */}
+        <header className="p-4 bg-white shadow-sm">
+          <div className="max-w-7xl mx-auto flex justify-between items-center">
+            <h1 className="text-2xl font-bold text-gray-800">InRecipes</h1>
+            <div className="hidden md:block w-1/3">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <Input
+                  placeholder="Search recipes..."
+                  className="pl-10 bg-white border-gray-200 focus:border-gray-400 focus:ring-gray-400"
+                />
+              </div>
+            </div>
+            <nav className="hidden md:flex space-x-4">
+              <Button variant="ghost" size="sm" asChild>
+                <Link href="/">
+                  <Home className="h-5 w-5 mr-2" />
+                  Home
+                </Link>
+              </Button>
+              <Button variant="ghost" size="sm">
+                <Plus className="h-5 w-5 mr-2" />
+                Add Recipe
+              </Button>
+              <Button variant="ghost" size="sm">
+                <User className="h-5 w-5 mr-2" />
+                Profile
+              </Button>
+            </nav>
+          </div>
+        </header>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        {/* Main Content */}
+        <div className="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto">
+          <div className="max-w-7xl mx-auto">
+            {/* Mobile Search Bar */}
+            <div className="md:hidden mb-6">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <Input
+                  placeholder="Search recipes..."
+                  className="pl-10 bg-white border-gray-200 focus:border-gray-400 focus:ring-gray-400"
+                />
+              </div>
+            </div>
+
+            {/* Recipe Categories */}
+            <div className="mb-8">
+              <h2 className="text-xl font-semibold mb-4">Categories</h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                {['Breakfast', 'Lunch', 'Dinner', 'Desserts', 'Vegetarian', 'Quick Meals'].map((category) => (
+                  <Button
+                    key={category}
+                    variant="outline"
+                    className="h-24 flex flex-col items-center justify-center bg-white hover:bg-gray-50"
+                    asChild
+                  >
+                    <Link href={`/categories/${category.toLowerCase()}`}>
+                      <span className="text-2xl mb-2">{getEmoji(category)}</span>
+                      <span className="text-sm font-medium">{category}</span>
+                    </Link>
+                  </Button>
+                ))}
+              </div>
+            </div>
+
+            {/* Recipes */}
+            <div>
+              <h2 className="text-xl font-semibold mb-4">Recipes</h2>
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {[1, 2, 3, 4, 5, 6].map((index) => (
+                  <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
+                    <Image
+                      src={`/placeholder.svg?height=200&width=300&text=Recipe ${index}`}
+                      alt={`Recipe ${index}`}
+                      width={300}
+                      height={200}
+                      className="w-full h-40 object-cover"
+                    />
+                    <div className="p-4">
+                      <h3 className="text-lg font-semibold mb-2">Recipe Title {index}</h3>
+                      <p className="text-sm text-gray-600 mb-3">Quick description of the recipe...</p>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-gray-500">15 min</span>
+                        <Button variant="ghost" size="sm" asChild>
+                          <Link href={`/recipes/${index}`}>View</Link>
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* Mobile Navigation */}
+        <nav className="md:hidden p-4 bg-white shadow-sm">
+          <div className="flex justify-between items-center max-w-xs mx-auto">
+            <Button variant="ghost" size="icon" asChild>
+              <Link href="/">
+                <Home className="h-6 w-6" />
+                <span className="sr-only">Home</span>
+              </Link>
+            </Button>
+            <Button variant="ghost" size="icon">
+              <Plus className="h-6 w-6" />
+              <span className="sr-only">Add new</span>
+            </Button>
+            <Button variant="ghost" size="icon">
+              <User className="h-6 w-6" />
+              <span className="sr-only">Profile</span>
+            </Button>
+          </div>
+        </nav>
+      </div>
     </div>
-  );
+  )
 }
+
+function getEmoji(category: string): string {
+  switch (category) {
+    case 'Breakfast': return '🍳';
+    case 'Lunch': return '🥪';
+    case 'Dinner': return '🍽️';
+    case 'Desserts': return '🍰';
+    case 'Vegetarian': return '🥗';
+    case 'Quick Meals': return '⏱️';
+    default: return '🍴';
+  }
+}
+

@@ -6,14 +6,16 @@ import { Plus, Search, Home, User } from 'lucide-react'
 import Link from "next/link"
 import Image from "next/image"
 
+
+
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
-      <div className="max-w-7xl mx-auto h-screen flex flex-col">
+      <div className="max-w-7xl h-screen mx-auto flex flex-col ">
         {/* Header */}
-        <header className="p-4 bg-white shadow-sm">
+        <header className="p-4 bg-white lg:bg-gray-50 shadow-sm lg:shadow-none">
           <div className="max-w-7xl mx-auto flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-800">InRecipes</h1>
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800">InRecipes</h1>
             <div className="hidden md:block w-1/3">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />

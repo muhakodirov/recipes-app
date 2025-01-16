@@ -9,9 +9,13 @@ export default {
 	],
 	theme: {
 		extend: {
-			animation: {
-				spinSlow: 'spin 2s linear infinite',
-			},
+			extend: {
+				fontFamily: {
+				  sans: ['var(--font-inter)'],
+				  mono: ['var(--font-roboto-mono)'],
+				  playwrite: ['var(--font-playwrite-au-sa)']
+				},
+			  },
 			colors: {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',

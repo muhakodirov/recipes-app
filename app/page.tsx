@@ -2,21 +2,33 @@
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Plus, Search, Home, User, LoaderCircle } from 'lucide-react'
+import { Plus, Search, Home, User, LoaderCircle, Save } from 'lucide-react'
 import Link from "next/link"
 import Image from "next/image"
 import { useQuery } from "@tanstack/react-query"
-import { getAllRecipes } from "@/utils/api-fetch-functions/Recipes"
+import { getAllRecipes, getAllRecipesTag } from "@/utils/api-fetch-functions/Recipes"
+import { useState } from "react"
+import CategoriesCardSkeleton from "@/components/skeleton/CategoriesCardSkeleton"
 
 
 
 export default function HomePage() {
+  const [isMoreClicked, setisMoreClicked] = useState<boolean>(true)
+
   const { isFetching, data, error, isError, isLoading } = useQuery({
     queryKey: ['homepage'],
     queryFn: () => getAllRecipes({ pageParam: 0 }),
     refetchOnWindowFocus: false,
     staleTime: Infinity,
     retry: 0
+  })
+
+  const {data: tags, isLoading: loading, isFetching: fetching} = useQuery({
+    queryKey: ['category'],
+    queryFn: () => getAllRecipesTag(),
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
+    retry: 0,
   })
 
   return (
@@ -37,9 +49,9 @@ export default function HomePage() {
             </div>
             <nav className="hidden md:flex space-x-4">
               <Button variant="ghost" size="sm" asChild>
-                <Link href="/">
-                  <Home className="h-5 w-5 mr-2" />
-                  Home
+                <Link href="/saved">
+                  <Save className="h-5 w-5 mr-2" />
+                  Saved
                 </Link>
               </Button>
               <Button variant="ghost" size="sm">
@@ -69,11 +81,23 @@ export default function HomePage() {
             </div>
 
             {/* Recipe Categories */}
-
-            <div className="mb-16">
-              <h2 className="text-xl font-semibold mb-4">Categories</h2>
+            {(loading || fetching) ? <CategoriesCardSkeleton />
+              : <div className="mb-20">
+                <h2 className="text-xl md:text-2xl font-semibold mb-4">Categories</h2>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                {['Breakfast', 'Lunch', 'Dinner', 'Desserts', 'Vegetarian', 'Quick Meals'].map((category) => (
+                {isMoreClicked ? tags?.slice(0,6).map((category) => 
+                  <Button
+                    key={category}
+                    variant="outline"
+                    className="h-24 flex flex-col items-center justify-center bg-white hover:bg-gray-50"
+                    asChild
+                  >
+                    <Link href={`/categories/${category.toLowerCase()}`}>
+                      <span className="text-2xl mb-2">{getEmoji(category)}</span>
+                      <span className="text-sm font-medium">{category}</span>
+                    </Link>
+                  </Button>
+                )  : tags?.map((category) => (
                   <Button
                     key={category}
                     variant="outline"
@@ -87,7 +111,9 @@ export default function HomePage() {
                   </Button>
                 ))}
               </div>
+              <Button onClick={() => setisMoreClicked(!isMoreClicked)} variant="link" className="float-end mt-2"> {isMoreClicked ? 'Show more' : 'Show less'} </Button>
             </div>
+            }
 
             {/* Recipes */}
             {(isFetching || isLoading) ?
@@ -96,7 +122,7 @@ export default function HomePage() {
               </div>
               : <div>
                 <Link href={`/recipes`}>
-                  <h2 className="text-xl font-semibold mb-4">Recipes (click for more)</h2>
+                  <h2 className="text-xl md:text-2xl font-semibold mb-4 underline ">Recipes</h2>
                 </Link>
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                   {data && data?.recipes.map((recipe, index) => (
@@ -121,9 +147,9 @@ export default function HomePage() {
                     </div>
                   ))}
                 </div>
+                <div className="my-10 flex justify-center items-center w-full h-full text-md lg:text-2xl font-bold"> Visit  <Link className="mx-2 border bg-lime-600 text-white px-2 rounded-lg" href="/recipes"> Recipe </Link>  page for more receipts ❤️ </div>
               </div>}
 
-            <div className="my-10 flex justify-center items-center w-full h-full text-md lg:text-2xl font-bold"> Visit  <Link className="mx-2 border bg-lime-600 text-white px-2 rounded-lg" href="/recipes"> Recipe </Link>  page for more receipts ❤️ </div>
           </div>
         </div>
 
@@ -153,13 +179,14 @@ export default function HomePage() {
 
 function getEmoji(category: string): string {
   switch (category) {
-    case 'Breakfast': return '🍳';
-    case 'Lunch': return '🥪';
-    case 'Dinner': return '🍽️';
-    case 'Desserts': return '🍰';
+    case 'Italian': return '🍝';
+    case 'Asian': return '🌶';
+    case 'Cookies': return '🍰';
+    case 'Stir-fry': return '⏱️';
     case 'Vegetarian': return '🥗';
-    case 'Quick Meals': return '⏱️';
-    default: return '🍴';
+    case 'Quick Meals': return '';
+    case 'Pizza': return '🍕';
+    default: return '🤷‍♂️';
   }
 }
 

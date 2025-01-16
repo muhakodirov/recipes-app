@@ -19,12 +19,12 @@ export async function getRecipeById(id: string): Promise<Recipe> {
     return json
 }
 
-export async function getAllRecipesTag(): Promise<RecipeResponse> {
-    const res = await fetch(`https://dummyjson.com/recipes/tag`)
+export async function getAllRecipesTag(): Promise<string[]> {
+    const res = await fetch(`https://dummyjson.com/recipes/tags`)
     if (!res.ok) {
         throw new Error(`HTTP-Error! Status: ${res.status}`);
     }
-    const json: RecipeResponse = await res.json()
+    const json: string[] = await res.json()
     return json
 }
 

@@ -2,7 +2,7 @@
 import { Recipe, RecipeResponse } from "../ts-types/recipes"
 
 export async function getAllRecipes({ pageParam }: any): Promise<RecipeResponse> {
-    const res = await fetch(`https://dummyjson.com/recipes?limit=${10}&skip=${pageParam}`)
+    const res = await fetch(`http://localhost:3000/api/get-recipes?limit=${10}&skip=${pageParam}`)
     if (!res.ok) {
         throw new Error(`HTTP-Error! Status: ${res.status}`);
     }
@@ -11,7 +11,7 @@ export async function getAllRecipes({ pageParam }: any): Promise<RecipeResponse>
 }
 
 export async function getRecipeById(id: string): Promise<Recipe> {
-    const res = await fetch(`https://dummyjson.com/recipes/${id}`)
+    const res = await fetch(`http://localhost:3000/api/get-recipes/${id}`)
     if (!res.ok) {
         throw new Error(`So ein Rezept haben wir leider nicht :(`);
     }
@@ -19,20 +19,24 @@ export async function getRecipeById(id: string): Promise<Recipe> {
     return json
 }
 
-export async function getAllRecipesTag(): Promise<string[]> {
-    const res = await fetch(`https://dummyjson.com/recipes/tags`)
+export type getAllRecipesTag_Type = {
+    _id: string
+    tag: string
+}
+export async function getAllRecipesTag(): Promise<getAllRecipesTag_Type[]> {
+    const res = await fetch(`http://localhost:3000/api/categories`)
     if (!res.ok) {
         throw new Error(`HTTP-Error! Status: ${res.status}`);
     }
-    const json: string[] = await res.json()
+    const json: getAllRecipesTag_Type[] = await res.json()
     return json
 }
 
-export async function getRecipeByTag(tag: string): Promise<RecipeResponse> {
-    const res = await fetch(`https://dummyjson.com/recipes/tag/${tag}`)
+export async function getRecipeByTag(tag: string): Promise<Recipe[]> {
+    const res = await fetch(`http://localhost:3000/api/categories/${tag}`)
     if (!res.ok) {
         throw new Error(`HTTP-Error! Status: ${res.status}`);
     }
-    const json: RecipeResponse = await res.json()
+    const json: Recipe[] = await res.json()
     return json
 }

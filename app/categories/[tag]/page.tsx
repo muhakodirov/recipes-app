@@ -8,17 +8,17 @@ import { useQuery } from "@tanstack/react-query"
 import { getRecipeByTag } from "@/utils/api-fetch-functions/Recipes"
 import RecipeCardSkeleton from "@/components/skeleton/RecipeCardSkeleton"
 
-export default function CategoryPage({params}:{params:Promise<any>}) {
-    
-    const { tag }:any = use(params)
-    console.log(tag)
+export default function CategoryPage({ params }: { params: Promise<any> }) {
 
-    const {data, isLoading, isFetching, error, isError} = useQuery({
+    const { tag }: any = use(params)
+
+    const { data, isLoading, isFetching, error, isError } = useQuery({
         queryKey: ['tag'],
         queryFn: () => getRecipeByTag(tag),
-        refetchOnWindowFocus:false,
+        refetchOnWindowFocus: false,
     })
-    
+    console.log(data)
+
     if (isFetching || isLoading) {
         return <RecipeCardSkeleton tag={tag} />
     }
@@ -37,7 +37,7 @@ export default function CategoryPage({params}:{params:Promise<any>}) {
                 </header>
 
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                    {data?.recipes?.map((el, index) => (
+                    {data?.map((el, index) => (
                         <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
                             <Image
                                 src={el.image}
@@ -59,7 +59,7 @@ export default function CategoryPage({params}:{params:Promise<any>}) {
                         </div>
                     ))}
                 </div>
-                
+
             </div>
         </div>
     )

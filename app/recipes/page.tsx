@@ -37,7 +37,7 @@ const categories = [
 export default function AllRecipesPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
-  const observer = useRef<IntersectionObserver>();
+  const observer = useRef<IntersectionObserver>(null);
 
 
   const {

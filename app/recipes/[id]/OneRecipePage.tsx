@@ -22,7 +22,7 @@ export default function OneRecipePage({ data, loading, error, isError }: Props) 
     const handleSave = () => {
         setIsSaved(!isSaved)
     }
-
+    console.log(data)
     if (isError) {
         return <Error message={error?.message} />
     }

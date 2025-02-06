@@ -23,7 +23,7 @@ export default function HomePage() {
     retry: 0
   })
 
-  const {data: tags, isLoading: loading, isFetching: fetching} = useQuery({
+  const { data: tags, isLoading: loading, isFetching: fetching } = useQuery({
     queryKey: ['category'],
     queryFn: () => getAllRecipesTag(),
     refetchOnWindowFocus: false,
@@ -84,35 +84,35 @@ export default function HomePage() {
             {(loading || fetching) ? <CategoriesCardSkeleton />
               : <div className="mb-20">
                 <h2 className="text-xl md:text-2xl font-semibold mb-4">Categories</h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                {isMoreClicked ? tags?.slice(0,6).map((category) => 
-                  <Button
-                    key={category}
-                    variant="outline"
-                    className="h-24 flex flex-col items-center justify-center bg-white hover:bg-gray-50"
-                    asChild
-                  >
-                    <Link href={`/categories/${category.toLowerCase()}`}>
-                      <span className="text-2xl mb-2">{getEmoji(category)}</span>
-                      <span className="text-sm font-medium">{category}</span>
-                    </Link>
-                  </Button>
-                )  : tags?.map((category) => (
-                  <Button
-                    key={category}
-                    variant="outline"
-                    className="h-24 flex flex-col items-center justify-center bg-white hover:bg-gray-50"
-                    asChild
-                  >
-                    <Link href={`/categories/${category.toLowerCase()}`}>
-                      <span className="text-2xl mb-2">{getEmoji(category)}</span>
-                      <span className="text-sm font-medium">{category}</span>
-                    </Link>
-                  </Button>
-                ))}
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                  {isMoreClicked ? tags?.slice(0, 6).map((category, index) =>
+                    <Button
+                      key={index}
+                      variant="outline"
+                      className="h-24 flex flex-col items-center justify-center bg-white hover:bg-gray-50"
+                      asChild
+                    >
+                      <Link href={`/categories/${category.tag.toLowerCase()}`}>
+                        <span className="text-2xl mb-2">{getEmoji(category.tag)}</span>
+                        <span className="text-sm font-medium">{category.tag}</span>
+                      </Link>
+                    </Button>
+                  ) : tags?.map((category, index) => (
+                    <Button
+                      key={index}
+                      variant="outline"
+                      className="h-24 flex flex-col items-center justify-center bg-white hover:bg-gray-50"
+                      asChild
+                    >
+                      <Link href={`/categories/${category.tag.toLowerCase()}`}>
+                        <span className="text-2xl mb-2">{getEmoji(category.tag)}</span>
+                        <span className="text-sm font-medium">{category.tag}</span>
+                      </Link>
+                    </Button>
+                  ))}
+                </div>
+                <Button onClick={() => setisMoreClicked(!isMoreClicked)} variant="link" className="float-end mt-2"> {isMoreClicked ? 'Show more' : 'Show less'} </Button>
               </div>
-              <Button onClick={() => setisMoreClicked(!isMoreClicked)} variant="link" className="float-end mt-2"> {isMoreClicked ? 'Show more' : 'Show less'} </Button>
-            </div>
             }
 
             {/* Recipes */}

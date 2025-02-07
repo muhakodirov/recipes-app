@@ -1,19 +1,20 @@
+
 import type { Metadata } from "next";
 import "./globals.css";
 import QueryProvider from "@/components/services/QueryProvider";
 import { Inter, Playwrite_AU_SA, Roboto_Mono } from 'next/font/google'
+import RecipeContextProvider from "@/context/Recipe";
+
  
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
 })
-
 const playwrite = Playwrite_AU_SA({
   display: 'swap',
   variable: '--font-playwrite-au-sa',
 })
- 
 const roboto_mono = Roboto_Mono({
   subsets: ['latin'],
   display: 'swap',
@@ -29,12 +30,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
+
+
   return (
     <html lang="en" className={`${inter.variable} ${roboto_mono.variable}`}>
-      <body>
+      <body className="bg-gray-50">
+      <RecipeContextProvider>
         <QueryProvider>
           {children}
         </QueryProvider>
+      </RecipeContextProvider>
       </body>
     </html>
   );

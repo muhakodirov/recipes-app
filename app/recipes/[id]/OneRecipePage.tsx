@@ -1,33 +1,44 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Clock, Users, BookmarkPlus, Divide, Utensils, Earth, Weight, Dumbbell } from 'lucide-react'
+import { ArrowLeft, Clock, Users, BookmarkPlus, Divide, Utensils, Earth, Weight, Dumbbell, BookmarkMinus } from 'lucide-react'
 import Link from "next/link"
 import Image from "next/image"
-import { useState } from "react"
+import { use, useState } from "react"
 import { Recipe } from "@/utils/ts-types/recipes"
 import OneRecipePageST from "@/components/skeleton/OneRecipePageST"
 import Error from "./error"
-
-type Props = {
-    data: Recipe | undefined,
-    loading: boolean,
-    error: Error | null
-    isError: boolean
-}
+import { useQuery } from "@tanstack/react-query"
+import { getRecipeById } from "@/utils/api-fetch-functions/Recipes"
+import { useRecipeContext } from "@/context/Recipe"
 
 
-export default function OneRecipePage({ data, loading, error, isError }: Props) {
-    const [isSaved, setIsSaved] = useState(false)
-    const handleSave = () => {
-        setIsSaved(!isSaved)
+
+export default function OneRecipePage({ params }:{ params: Promise<{id: string}> }) {
+    const {savedRecipes,saveRecipe,deleteRecipe} = useRecipeContext()
+    const { id } = use(params)
+    const isExist = savedRecipes.some((el) => el.id === parseInt(id))
+    console.log(isExist)
+
+    const { isFetching, data, error, isError } = useQuery({
+        queryKey: ['todos'],
+        queryFn: () => getRecipeById(id),
+        refetchOnWindowFocus: false,
+        retry: 0
+    })
+
+    const handleSave = (obj:Recipe) => {
+        saveRecipe(obj)
     }
-    console.log(data)
+    const handleDelete = (id:any) => {
+        deleteRecipe(id)
+    }
+
     if (isError) {
         return <Error message={error?.message} />
     }
 
-    if (loading) {
+    if (isFetching) {
         return <OneRecipePageST />
     }
 
@@ -52,10 +63,13 @@ export default function OneRecipePage({ data, loading, error, isError }: Props) 
 
                     <div className="flex justify-between items-center mb-6">
                         <h1 className="text-3xl font-bold">{data?.name}</h1>
-                        <Button onClick={handleSave} variant={isSaved ? "secondary" : "outline"}>
-                            <BookmarkPlus className="h-5 w-5 mr-2" />
-                            {isSaved ? "Saved" : "Save Recipe"}
-                        </Button>
+                        {isExist ? 
+                            <Button onClick={() => handleDelete(data.id)} variant={"secondary"}>
+                                <BookmarkMinus className="h-5 w-5 mr-1" />
+                            </Button>
+                            : <Button onClick={() => handleSave(data)} variant={"outline"}>
+                                <BookmarkPlus className="h-5 w-5 mr-1" />
+                            </Button> }          
                     </div>
 
                     <div className="flex flex-wrap gap-4 mb-6">

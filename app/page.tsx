@@ -9,18 +9,19 @@ import { useQuery } from "@tanstack/react-query"
 import { getAllRecipes, getAllRecipesTag } from "@/utils/api-fetch-functions/Recipes"
 import { useState } from "react"
 import CategoriesCardSkeleton from "@/components/skeleton/CategoriesCardSkeleton"
-
+import Header from "@/components/header/Header"
 
 
 export default function HomePage() {
   const [isMoreClicked, setisMoreClicked] = useState<boolean>(true)
+  
 
   const { isFetching, data, error, isError, isLoading } = useQuery({
     queryKey: ['homepage'],
     queryFn: () => getAllRecipes({ pageParam: 0 }),
     refetchOnWindowFocus: false,
     staleTime: Infinity,
-    retry: 0
+    retry: 2
   })
 
   const { data: tags, isLoading: loading, isFetching: fetching } = useQuery({
@@ -32,39 +33,10 @@ export default function HomePage() {
   })
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900">
+    <div className="min-h-screen text-gray-900">
       <div className="max-w-7xl h-screen mx-auto flex flex-col ">
         {/* Header */}
-        <header className="p-4 bg-white lg:bg-gray-50 shadow-sm lg:shadow-none">
-          <div className="max-w-7xl mx-auto flex justify-between items-center">
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800">InRecipes</h1>
-            <div className="hidden md:block w-1/3">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                <Input
-                  placeholder="Search recipes..."
-                  className="pl-10 bg-white border-gray-200 focus:border-gray-400 focus:ring-gray-400"
-                />
-              </div>
-            </div>
-            <nav className="hidden md:flex space-x-4">
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/saved">
-                  <Save className="h-5 w-5 mr-2" />
-                  Saved
-                </Link>
-              </Button>
-              <Button variant="ghost" size="sm">
-                <Plus className="h-5 w-5 mr-2" />
-                Add Recipe
-              </Button>
-              <Button variant="ghost" size="sm">
-                <User className="h-5 w-5 mr-2" />
-                Profile
-              </Button>
-            </nav>
-          </div>
-        </header>
+       <Header />
 
         {/* Main Content */}
         <div className="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto">

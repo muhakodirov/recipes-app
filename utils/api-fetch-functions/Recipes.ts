@@ -10,6 +10,15 @@ export async function getAllRecipes({ pageParam }: any): Promise<RecipeResponse>
     return json
 }
 
+export async function getAll(): Promise<Recipe[]> {
+    const res = await fetch(`http://localhost:3000/api/get-all`)
+    if (!res.ok) {
+        throw new Error(`HTTP-Error! Status: ${res.status}`);
+    }
+    const json: Recipe[] = await res.json()
+    return json
+}
+
 export async function getRecipeById(id: string): Promise<Recipe> {
     const res = await fetch(`http://localhost:3000/api/get-recipes/${id}`)
     if (!res.ok) {

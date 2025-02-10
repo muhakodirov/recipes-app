@@ -10,6 +10,7 @@ import { getAllRecipes, getAllRecipesTag } from "@/utils/api-fetch-functions/Rec
 import { useState } from "react"
 import CategoriesCardSkeleton from "@/components/skeleton/CategoriesCardSkeleton"
 import Header from "@/components/header/Header"
+import { Sidebar } from "@/components/sidebar-menu/sidebar"
 
 
 export default function HomePage() {
@@ -37,24 +38,12 @@ export default function HomePage() {
       <div className="max-w-7xl h-screen mx-auto flex flex-col ">
         {/* Header */}
        <Header />
-
         {/* Main Content */}
         <div className="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto">
           <div className="max-w-7xl mx-auto">
-            {/* Mobile Search Bar */}
-            <div className="md:hidden mb-6">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                <Input
-                  placeholder="Search recipes..."
-                  className="pl-10 bg-white border-gray-200 focus:border-gray-400 focus:ring-gray-400"
-                />
-              </div>
-            </div>
-
             {/* Recipe Categories */}
             {(loading || fetching) ? <CategoriesCardSkeleton />
-              : <div className="mb-20">
+              : <div className="mb-20 mt-10">
                 <h2 className="text-xl md:text-2xl font-semibold mb-4">Categories</h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                   {isMoreClicked ? tags?.slice(0, 6).map((category, index) =>
@@ -124,26 +113,6 @@ export default function HomePage() {
 
           </div>
         </div>
-
-        {/* Mobile Navigation */}
-        <nav className="md:hidden p-4 bg-white shadow-sm">
-          <div className="flex justify-between items-center max-w-xs mx-auto">
-            <Button variant="ghost" size="icon" asChild>
-              <Link href="/">
-                <Home className="h-6 w-6" />
-                <span className="sr-only">Home</span>
-              </Link>
-            </Button>
-            <Button variant="ghost" size="icon">
-              <Plus className="h-6 w-6" />
-              <span className="sr-only">Add new</span>
-            </Button>
-            <Button variant="ghost" size="icon">
-              <User className="h-6 w-6" />
-              <span className="sr-only">Profile</span>
-            </Button>
-          </div>
-        </nav>
       </div>
     </div>
   )

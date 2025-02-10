@@ -9,7 +9,6 @@ export default function RecipeSkeleton() {
         <Button variant="ghost" size="sm" asChild className="mb-4">
           <Link href="/categories/breakfast">
             <ArrowLeft className="h-5 w-5 mr-2" />
-            <p className="hidden md:block"> Back to Breakfast Recipes </p> 
           </Link>
         </Button>
 

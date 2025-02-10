@@ -7,8 +7,10 @@ import { use } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { getRecipeByTag } from "@/utils/api-fetch-functions/Recipes"
 import RecipeCardSkeleton from "@/components/skeleton/RecipeCardSkeleton"
+import { useRouter } from "next/navigation"
 
 export default function CategoryPage({ params }: { params: Promise<any> }) {
+    const router = useRouter()
 
     const { tag }: any = use(params)
 
@@ -27,11 +29,8 @@ export default function CategoryPage({ params }: { params: Promise<any> }) {
         <div className="min-h-screen bg-gray-50 text-gray-900">
             <div className="max-w-7xl mx-auto p-4 md:p-6 lg:p-8">
                 <header className="mb-8">
-                    <Button variant="ghost" size="sm" asChild className="mb-4">
-                        <Link href="/">
+                    <Button onClick={() => router.back()} variant="ghost" size="sm" className="mb-4">
                             <ArrowLeft className="h-5 w-5 mr-2" />
-                            Back to Categories
-                        </Link>
                     </Button>
                     <h1 className="text-3xl font-bold">{tag.toUpperCase()} Recipes</h1>
                 </header>

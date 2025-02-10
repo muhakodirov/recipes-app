@@ -11,15 +11,15 @@ import Error from "./error"
 import { useQuery } from "@tanstack/react-query"
 import { getRecipeById } from "@/utils/api-fetch-functions/Recipes"
 import { useRecipeContext } from "@/context/Recipe"
+import { useRouter } from 'next/navigation'
 
 
 
 export default function OneRecipePage({ params }:{ params: Promise<{id: string}> }) {
+    const router = useRouter()
     const {savedRecipes,saveRecipe,deleteRecipe} = useRecipeContext()
     const { id } = use(params)
     const isExist = savedRecipes.some((el) => el.id === parseInt(id))
-    console.log(isExist)
-
     const { isFetching, data, error, isError } = useQuery({
         queryKey: ['todos'],
         queryFn: () => getRecipeById(id),
@@ -46,12 +46,10 @@ export default function OneRecipePage({ params }:{ params: Promise<{id: string}>
         <>
             {data && <div className="min-h-screen bg-gray-50 text-gray-900">
                 <div className="max-w-4xl mx-auto p-4 md:p-6 lg:p-8">
-                    <Button variant="ghost" size="sm" asChild className="mb-4">
-                        <Link href="/recipes">
-                            <ArrowLeft className="h-5 w-5 mr-2" />
-                            <p className="hidden md:block text-xl"> Back to Recipes </p>
-                        </Link>
-                    </Button>
+                    <button onClick={() => router.back()}  className="mb-4 flex justify-center items-center">
+                            <ArrowLeft className="h-4 w-4 mr-2" />
+                           
+                    </button>
 
                     <Image
                         src={data?.image}

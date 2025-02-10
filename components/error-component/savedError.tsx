@@ -1,10 +1,10 @@
 "use client"
-import { Snail } from 'lucide-react';
+import { Rabbit, Snail } from 'lucide-react';
 export default function SavedError() {
   return (
     <div className="flex justify-center items-center flex-col mt-32">
-        <Snail className=' animate-bounce hover:paused text-green-500 size-60 text-5xl'/>
-        <h1 className="text-4xl font-bold"> Du hast keine Rezepte gespeichert </h1>
+        <Rabbit className=' text-gray-800 size-48 md:size-52 lg:size-60 text-5xl'/>
+        {/* <h1 className="text-2xl lg:text-3xl"> Du hast keine Rezepte gespeichert </h1> */}
     </div>
   )
 }

@@ -3,6 +3,7 @@ import React from 'react'
 import { Button } from "@/components/ui/button";
 import { Plus, Save, User } from "lucide-react";
 import Link from "next/link";
+import { Sidebar } from '../sidebar-menu/sidebar';
 
 export default function Header() {
   return (
@@ -13,6 +14,7 @@ export default function Header() {
         <Link href="/">
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800">InRecipes</h1>
         </Link>
+        {/* Desktop Nav-Menu*/}
         <nav className="hidden md:flex space-x-4">
           <Button variant="ghost" size="sm" asChild>
             <Link href="/saved">
@@ -28,6 +30,10 @@ export default function Header() {
             <User className="h-5 w-5 mr-2" />
             Profile
           </Button>
+        </nav>
+        {/* Mobile Nav-Menu*/}
+        <nav className='flex md:hidden'>
+          <Sidebar />
         </nav>
       </div>
     </header>

@@ -69,7 +69,6 @@ export default function AllRecipesPage() {
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasNextPage && !isFetching) {
           fetchNextPage();
-          console.log("Fetched next page!")
         }
       });
 

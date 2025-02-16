@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/select"
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { getAllRecipes } from '@/utils/api-fetch-functions/Recipes'
-import { Recipe } from '@/utils/ts-types/recipes'
 
 const categories = [
   "All", "Pizza", "Italian", "Vegetarian", "Stir-fry", "Asian", "Cookies", "Dessert",

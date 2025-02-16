@@ -49,3 +49,12 @@ export async function getRecipeByTag(tag: string): Promise<Recipe[]> {
     const json: Recipe[] = await res.json()
     return json
 }
+
+export async function getRecipeByUserId(userId: string): Promise<Recipe[]> {
+    const res = await fetch(`http://localhost:3000/api/get-by-userid/${userId}`)
+    if (!res.ok) {
+        throw new Error(`HTTP-Error! Status: ${res.status}`);
+    }
+    const json: Recipe[] = await res.json()
+    return json
+}

@@ -10,7 +10,6 @@ export async function GET(req: NextApiRequest) {
         return NextResponse.json({ error: "Invalid request URL" }, { status: 400 });
     }
     const { searchParams } = new URL(req.url);
-    console.log(new URL(req.url))
     const skip = parseInt(searchParams.get("skip") || "0");
     await connectDB()
     const recipe = await Recipe.find({}).skip(skip).limit(10)

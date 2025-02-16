@@ -15,7 +15,7 @@ import { Sidebar } from "@/components/sidebar-menu/sidebar"
 
 export default function HomePage() {
   const [isMoreClicked, setisMoreClicked] = useState<boolean>(true)
-  
+
 
   const { isFetching, data, error, isError, isLoading } = useQuery({
     queryKey: ['homepage'],
@@ -37,7 +37,7 @@ export default function HomePage() {
     <div className="min-h-screen text-gray-900">
       <div className="max-w-7xl h-screen mx-auto flex flex-col ">
         {/* Header */}
-       <Header />
+        <Header />
         {/* Main Content */}
         <div className="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto">
           <div className="max-w-7xl mx-auto">

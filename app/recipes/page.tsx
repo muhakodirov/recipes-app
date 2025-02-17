@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Search, Filter, LoaderCircle, ArrowLeft } from 'lucide-react'
 import Link from "next/link"
-import Image from "next/image"
 import {
   Select,
   SelectContent,
@@ -15,6 +14,7 @@ import {
 } from "@/components/ui/select"
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { getAllRecipes } from '@/utils/api-fetch-functions/Recipes'
+import create from '@/action/create'
 
 const categories = [
   "All", "Pizza", "Italian", "Vegetarian", "Stir-fry", "Asian", "Cookies", "Dessert",
@@ -58,6 +58,7 @@ export default function AllRecipesPage() {
       return nextSkip < total ? nextSkip : undefined; // Falls alle Rezepte geladen sind, keine weitere Seite abrufen
     },
   })
+
 
   const lastElementRef = useCallback(
     (node: HTMLDivElement) => {
@@ -120,7 +121,7 @@ export default function AllRecipesPage() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredRecipes?.map((recipe) => (
             <div key={recipe.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-              <Image
+              <img
                 src={recipe.image || "/placeholder.svg"}
                 alt={recipe.name}
                 width={300}

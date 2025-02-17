@@ -51,7 +51,7 @@ export default function OneRecipePage({ params }:{ params: Promise<{id: string}>
                            
                     </button>
 
-                    <Image
+                    <img
                         src={data?.image}
                         alt={data?.name}
                         width={600}

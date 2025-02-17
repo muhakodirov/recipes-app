@@ -3,11 +3,12 @@ import signIn from '@/action/signIn';
 import React, { useState } from 'react';
 import SubmitLogin from './Submit-Login';
 import { useUserContext } from '@/context/User';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname, useSearchParams  } from 'next/navigation';
 import setSession from '@/lib/session';
 
 const LoginForm: React.FC = () => {
     const router = useRouter();
+    const searchParams = useSearchParams()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -19,7 +20,8 @@ const LoginForm: React.FC = () => {
             setError('');
             setCurrUser(response.user);
             setSession(response?.user);
-            router.push('/profile');
+            const redirect = searchParams.get('redirect') as string || '/profile';
+            router.push(redirect);
         } else {
             response?.message && setError(response?.message);
         }

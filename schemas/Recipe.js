@@ -27,7 +27,6 @@ const RecipesSchema = new mongoose.Schema({
     },
     difficulty: {
         type: String,
-        enum: ["Easy", "Medium", "Hard"],
     },
     cuisine: {
         type: String,
@@ -40,7 +39,7 @@ const RecipesSchema = new mongoose.Schema({
         default: [],
     },
     userId: {
-        type: Number,
+        type: String,
     },
     image: {
         type: String,

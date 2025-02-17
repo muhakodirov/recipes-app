@@ -11,11 +11,11 @@ import { useState } from "react"
 import CategoriesCardSkeleton from "@/components/skeleton/CategoriesCardSkeleton"
 import Header from "@/components/header/Header"
 import { Sidebar } from "@/components/sidebar-menu/sidebar"
+import { useUserContext } from "@/context/User"
 
 
 export default function HomePage() {
   const [isMoreClicked, setisMoreClicked] = useState<boolean>(true)
-
 
   const { isFetching, data, error, isError, isLoading } = useQuery({
     queryKey: ['homepage'],

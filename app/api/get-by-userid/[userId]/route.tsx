@@ -11,7 +11,7 @@ type Params = {
 export async function GET(req: NextApiRequest, { params }: Params) {
     await connectDB()
     const result = await params
-    const id = parseInt(result.userId)
-    const recipe = await Recipe.find({ userId: id })
+    const id = result.userId
+    const recipe = await Recipe.find({ userId: `${id}` })
     return NextResponse.json(recipe)
 }

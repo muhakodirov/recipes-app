@@ -10,7 +10,7 @@ export default function RecipeCard({data}:{data:Recipe[]}) {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {data && data?.map((recipe, index) => (
             <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
-              <Image
+              <img
                 src={recipe.image}
                 alt={`Recipe ${recipe.name}`}
                 width={300}

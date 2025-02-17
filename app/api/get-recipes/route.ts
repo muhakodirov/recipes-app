@@ -12,7 +12,8 @@ export async function GET(req: NextApiRequest) {
     const { searchParams } = new URL(req.url);
     const skip = parseInt(searchParams.get("skip") || "0");
     await connectDB()
+    const total = await Recipe.countDocuments();
     const recipe = await Recipe.find({}).skip(skip).limit(10)
-    const data: RecipeResponse = { recipes: recipe, total: 30, skip: skip, limit: 10 }
+    const data: RecipeResponse = { recipes: recipe, total: total, skip: skip, limit: 10 }
     return NextResponse.json(data)
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Grid, Bookmark, Loader2 } from "lucide-react"
 import Card from "./Card"
 import { useUserContext } from "@/context/User";
@@ -14,6 +14,19 @@ export default function ProfileTabs() {
     const [activeTab, setActiveTab] = useState("posts")
     const [data, setData] = useState<Recipe[]>([])
     const [loading, setLoading] = useState<boolean>(false)
+
+
+    useEffect(()=>{
+        setLoading(true)
+        const fetchData = async () => {
+            const obj = await getRecipeByUserId(currUser?.id)
+            setData(obj)
+            setLoading(false)
+        }
+        fetchData()
+    }, [])
+
+
 
     const handleTabs = async (tab: string) => {
         setActiveTab(tab)
@@ -38,6 +51,10 @@ export default function ProfileTabs() {
                 break
         }
     }
+
+
+
+
     return (
         <>
             <div className="border-t border-gray-200 mb-8">

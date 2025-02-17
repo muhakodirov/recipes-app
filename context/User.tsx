@@ -9,14 +9,9 @@ type User = {
     lastname: string,
 }
 
-type UserContextType = {
-    currUser: User | null,
-    setCurrUser: Dispatch<SetStateAction<User | null>>,
-}
-
 
 const UserContext = createContext<any>({
-    currUser: { id: '', email: '', firstname: '', lastname: '' },
+    currUser: {},
     setCurrUser: () => { }
 })
 
@@ -30,6 +25,8 @@ export default function UserContextProvider({ children }: { children: React.Reac
             setCurrUser(null);
         }
     }, []);
+
+    console.log(currUser)
 
     return (
         <UserContext.Provider value={{ currUser, setCurrUser }}>

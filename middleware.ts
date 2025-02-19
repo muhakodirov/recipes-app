@@ -5,14 +5,10 @@ export function middleware(request: NextRequest) {
     const sessionCookie = request.cookies.get("userSession")?.value;
     const isPublicPath = request.nextUrl.pathname === '/login' || request.nextUrl.pathname === '/signup';
     const url = request.nextUrl.clone();
+    let session = sessionCookie ? JSON.parse(sessionCookie) : null;
 
-    let session = null;
-    try {
-        session = sessionCookie ? JSON.parse(sessionCookie) : null;
-        session.expires = Number(session?.expires);
-    } catch (error) {
-        console.error("Fehler beim Parsen der Session:", error);
-    }
+
+
 
     // Wenn der Benutzer bereits auf einer öffentlichen Seite ist und nicht eingeloggt, KEIN Redirect
     if (isPublicPath && !session) {
@@ -24,6 +20,7 @@ export function middleware(request: NextRequest) {
         request.cookies.delete("userSession"); // Sicherstellen, dass das Cookie gelöscht wird
         url.pathname = '/login';
         url.searchParams.set('redirect', request.url);
+        console.log(url)
         return NextResponse.redirect(url);
     }
 

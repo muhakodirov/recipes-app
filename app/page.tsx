@@ -12,6 +12,7 @@ import CategoriesCardSkeleton from "@/components/skeleton/CategoriesCardSkeleton
 import Header from "@/components/header/Header"
 import { Sidebar } from "@/components/sidebar-menu/sidebar"
 import { useUserContext } from "@/context/User"
+import Footer from "@/components/footer/Footer"
 
 
 export default function HomePage() {
@@ -114,6 +115,7 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

@@ -2,7 +2,8 @@
 
 import connectDB from "@/mongodb/mongoConnection"
 import User from "@/schemas/User";
-import { redirect } from "next/navigation";
+import bcryptjs from 'bcryptjs'
+
 
 type UserType = {
     id: string,
@@ -24,7 +25,9 @@ export default async function signIn(formData: FormData): Promise<Response | voi
     const user = await User.findOne({ email });
     if (!user) {
         return { ok: false, message: 'Benutzer wurde nicht gefunden' };
-    } else if (user.password !== password) {
+    }
+    const validPassword = await bcryptjs.compare(password, user.password)
+    if(!validPassword) {
         return { ok: false, message: 'Passwort ist falsch' };
     }
 

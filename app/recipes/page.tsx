@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Search, Filter, LoaderCircle, ArrowLeft } from 'lucide-react'
 import Link from "next/link"
+import Footer from "@/components/footer/Footer";
+
 import {
   Select,
   SelectContent,
@@ -143,6 +145,7 @@ export default function AllRecipesPage() {
         </div>
         {isFetching && <div className="my-10 flex justify-center items-center w-full h-full"> <LoaderCircle className='animate-spin size-12' /> </div>}
       </div>
+      <Footer />
     </div>
   )
 }

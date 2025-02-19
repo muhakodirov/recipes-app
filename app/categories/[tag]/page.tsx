@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query"
 import { getRecipeByTag } from "@/utils/api-fetch-functions/Recipes"
 import RecipeCardSkeleton from "@/components/skeleton/RecipeCardSkeleton"
 import { useRouter } from "next/navigation"
+import Footer from "@/components/footer/Footer"
 
 export default function CategoryPage({ params }: { params: Promise<any> }) {
     const router = useRouter()
@@ -58,7 +59,6 @@ export default function CategoryPage({ params }: { params: Promise<any> }) {
                         </div>
                     ))}
                 </div>
-
             </div>
         </div>
     )

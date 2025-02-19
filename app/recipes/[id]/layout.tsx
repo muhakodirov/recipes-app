@@ -1,4 +1,5 @@
 import Header from "@/components/header/Header";
+import Footer from "@/components/footer/Footer";
 
 export default function IDPageLayout({
   children,
@@ -9,6 +10,7 @@ export default function IDPageLayout({
     <>
         <Header/>
         {children}
+        <Footer />
     </>
   );
 }       

@@ -1,8 +1,8 @@
 "use server"
 import connectDB from "@/mongodb/mongoConnection";
 import User from '@/schemas/User';
-import { redirect } from "next/navigation";
 import { randomUUID } from 'crypto';
+import bcryptjs from 'bcryptjs'
 
 interface ErrorResponse {
     error: boolean;
@@ -22,7 +22,10 @@ export async function signUp(formData: FormData): Promise<ErrorResponse | void> 
         };
     }
 
-    //TODO: Encrypt password before saving
+    //TODO: crypt password before saving
+    const salt = await bcryptjs.genSalt(10)
+    const hashedPassword = await bcryptjs.hash(password, salt)
+
     try {
         await connectDB()
         const foundEmail = await User.findOne({ email });
@@ -36,7 +39,7 @@ export async function signUp(formData: FormData): Promise<ErrorResponse | void> 
                 firstName,
                 lastName,
                 email,
-                password,
+                password: hashedPassword,
                 userId: randomUUID(),
             }).save();
         }

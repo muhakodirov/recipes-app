@@ -11,7 +11,7 @@ export async function getAllRecipes({ pageParam }: any): Promise<RecipeResponse>
 }
 
 export async function getAll(): Promise<Recipe[]> {
-    const res = await fetch(`http://localhost:3000/api/get-all`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/get-all`)
     if (!res.ok) {
         throw new Error(`HTTP-Error! Status: ${res.status}`);
     }
@@ -20,7 +20,7 @@ export async function getAll(): Promise<Recipe[]> {
 }
 
 export async function getRecipeById(id: string): Promise<Recipe> {
-    const res = await fetch(`http://localhost:3000/api/get-recipes/${id}`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/get-recipes/${id}`)
     if (!res.ok) {
         throw new Error(`So ein Rezept haben wir leider nicht :(`);
     }
@@ -33,7 +33,7 @@ export type getAllRecipesTag_Type = {
     tag: string
 }
 export async function getAllRecipesTag(): Promise<getAllRecipesTag_Type[]> {
-    const res = await fetch(`http://localhost:3000/api/categories`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`)
     if (!res.ok) {
         throw new Error(`HTTP-Error! Status: ${res.status}`);
     }
@@ -42,7 +42,7 @@ export async function getAllRecipesTag(): Promise<getAllRecipesTag_Type[]> {
 }
 
 export async function getRecipeByTag(tag: string): Promise<Recipe[]> {
-    const res = await fetch(`http://localhost:3000/api/categories/${tag}`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories/${tag}`)
     if (!res.ok) {
         throw new Error(`HTTP-Error! Status: ${res.status}`);
     }
@@ -51,7 +51,7 @@ export async function getRecipeByTag(tag: string): Promise<Recipe[]> {
 }
 
 export async function getRecipeByUserId(userId: string): Promise<Recipe[]> {
-    const res = await fetch(`http://localhost:3000/api/get-by-userid/${userId}`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/get-by-userid/${userId}`)
     if (!res.ok) {
         throw new Error(`HTTP-Error! Status: ${res.status}`);
     }

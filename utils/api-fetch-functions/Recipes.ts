@@ -2,7 +2,7 @@
 import { Recipe, RecipeResponse } from "../ts-types/recipes"
 
 export async function getAllRecipes({ pageParam }: any): Promise<RecipeResponse> {
-    const res = await fetch(`http://localhost:3000/api/get-recipes?limit=${10}&skip=${pageParam}`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/get-recipes?limit=${10}&skip=${pageParam}`)
     if (!res.ok) {
         throw new Error(`HTTP-Error! Status: ${res.status}`);
     }

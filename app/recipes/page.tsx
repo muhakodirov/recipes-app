@@ -3,7 +3,7 @@
 import { useCallback, useRef, useState } from 'react'
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Search, Filter, LoaderCircle, ArrowLeft } from 'lucide-react'
+import { Search, LoaderCircle, ArrowLeft } from 'lucide-react'
 import Link from "next/link"
 import Footer from "@/components/footer/Footer";
 
@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/select"
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { getAllRecipes } from '@/utils/api-fetch-functions/Recipes'
-import create from '@/action/create'
 
 const categories = [
   "All", "Pizza", "Italian", "Vegetarian", "Stir-fry", "Asian", "Cookies", "Dessert",
@@ -65,18 +64,18 @@ export default function AllRecipesPage() {
   const lastElementRef = useCallback(
     (node: HTMLDivElement) => {
       if (isLoading || isFetchingNextPage) return;
-
+  
       if (observer.current) observer.current.disconnect();
-
+  
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasNextPage && !isFetching) {
           fetchNextPage();
         }
       });
-
+  
       if (node) observer.current.observe(node);
     },
-    [isLoading, isFetchingNextPage, fetchNextPage, hasNextPage]
+    [isLoading, isFetchingNextPage, fetchNextPage, hasNextPage, isFetching]
   );
 
   const allRecipes = data?.pages.flatMap(page => page.recipes) || [];

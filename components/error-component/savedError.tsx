@@ -1,5 +1,5 @@
 "use client"
-import { Rabbit, Snail } from 'lucide-react';
+import { Rabbit } from 'lucide-react';
 export default function SavedError() {
   return (
     <div className="flex justify-center items-center flex-col mt-32">

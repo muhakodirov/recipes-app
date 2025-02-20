@@ -1,17 +1,11 @@
 import Recipe from '@/schemas/Recipe';
 import connectDB from '@/mongodb/mongoConnection'
-import { NextResponse } from 'next/server';
-import { NextApiRequest } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
 
-type Params = {
-    params: {
-        userId: string
-    }
-}
-export async function GET(req: NextApiRequest, { params }: Params) {
+
+export async function GET(request: NextRequest, { params }: { params: Promise<{ userId: string }> }) {
     await connectDB()
-    const result = await params
-    const id = result.userId
-    const recipe = await Recipe.find({ userId: `${id}` })
+    const { userId } = await params;
+    const recipe = await Recipe.find({ userId: `${userId}` })
     return NextResponse.json(recipe)
 }

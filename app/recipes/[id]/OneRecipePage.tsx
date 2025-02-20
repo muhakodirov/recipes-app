@@ -1,14 +1,12 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Clock, Users, BookmarkPlus, Divide, Utensils, Earth, Weight, Dumbbell, BookmarkMinus } from 'lucide-react'
-import Link from "next/link"
-import Image from "next/image"
-import { Suspense, use, useState } from "react"
+import { ArrowLeft, Clock, Users, BookmarkPlus, Earth, Weight, Dumbbell, BookmarkMinus } from 'lucide-react'
+import { use } from "react"
 import { Recipe } from "@/utils/ts-types/recipes"
 import OneRecipePageST from "@/components/skeleton/OneRecipePageST"
 import Error from "./error"
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 import { getRecipeById } from "@/utils/api-fetch-functions/Recipes"
 import { useRecipeContext } from "@/context/Recipe"
 import { useRouter } from 'next/navigation'
@@ -35,12 +33,11 @@ export default function OneRecipePage({ params }: { params: Promise<{ id: string
         refetchOnWindowFocus: false,
         retry: 0
     })
-    console.log(comments)
 
     const handleSave = (obj: Recipe) => {
         saveRecipe(obj)
     }
-    const handleDelete = (id: any) => {
+    const handleDelete = (id: number) => {
         deleteRecipe(id)
     }
 
@@ -70,7 +67,7 @@ export default function OneRecipePage({ params }: { params: Promise<{ id: string
                             <div className="flex justify-between items-center mb-6">
                                 <h1 className="text-3xl font-bold">{data?.name}</h1>
                                 {isExist ?
-                                    <Button onClick={() => handleDelete(data?.id)} variant={"secondary"}>
+                                    <Button onClick={() => handleDelete(data?.id as number)} variant={"secondary"}>
                                         <BookmarkMinus className="h-5 w-5 mr-1" />
                                     </Button>
                                     : <Button onClick={() => handleSave(data!)} variant={"outline"}>
@@ -127,7 +124,7 @@ export default function OneRecipePage({ params }: { params: Promise<{ id: string
                         </>
                     }
                     {/* <Suspense fallback="Loading ..."> */}
-                    {<Comments comments={comments || []} recipeId={Number(id)} />}
+                    {<Comments comments={comments || []} recipeId={parseInt(id)} />}
                     {/* </Suspense> */}
                 </div>
             </div>

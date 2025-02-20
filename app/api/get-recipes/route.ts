@@ -1,11 +1,9 @@
 import Recipe from '@/schemas/Recipe';
 import connectDB from './../../../mongodb/mongoConnection'
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import { RecipeResponse } from '@/utils/ts-types/recipes';
-import { use } from 'react';
-import { NextApiRequest } from 'next';
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: NextRequest) {
     if (!req.url) {
         return NextResponse.json({ error: "Invalid request URL" }, { status: 400 });
     }

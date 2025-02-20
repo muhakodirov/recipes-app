@@ -1,14 +1,14 @@
 "use client"
-import Image from 'next/image'
 import React from 'react'
 import { Button } from '../../components/ui/button'
 import Link from 'next/link'
 import { SearchX } from 'lucide-react'
+import { Recipe } from '@/utils/ts-types/recipes'
 
-export default function Card({ data }: { data: any }) {
+export default function Card({ data }: { data: Recipe[] }) {
     return (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {data.length > 0 ? data?.map((recipe: any) => (
+            {data.length > 0 ? data?.map((recipe: Recipe) => (
                 <div key={recipe.id} className="bg-white rounded-lg shadow-md overflow-hidden">
                     <img
                         src={recipe.image}

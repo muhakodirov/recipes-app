@@ -8,14 +8,13 @@ import { useQuery } from "@tanstack/react-query"
 import { getRecipeByTag } from "@/utils/api-fetch-functions/Recipes"
 import RecipeCardSkeleton from "@/components/skeleton/RecipeCardSkeleton"
 import { useRouter } from "next/navigation"
-import Footer from "@/components/footer/Footer"
 
-export default function CategoryPage({ params }: { params: Promise<any> }) {
+export default function CategoryPage({ params }: { params: Promise<{tag: string}> }) {
     const router = useRouter()
 
-    const { tag }: any = use(params)
+    const { tag } = use(params)
 
-    const { data, isLoading, isFetching, error, isError } = useQuery({
+    const { data, isLoading, isFetching } = useQuery({
         queryKey: ['tag'],
         queryFn: () => getRecipeByTag(tag),
         refetchOnWindowFocus: false,

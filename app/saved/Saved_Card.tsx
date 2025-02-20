@@ -1,7 +1,6 @@
 "use client"
 import RecipeCard from '@/components/card/RecipeCard'
 import SavedError from '@/components/error-component/savedError'
-import Header from '@/components/header/Header'
 import { useRecipeContext } from '@/context/Recipe'
 import React from 'react'
 

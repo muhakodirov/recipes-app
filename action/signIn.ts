@@ -18,7 +18,7 @@ interface Response {
     user?: UserType;
 }
 
-export default async function signIn(formData: FormData): Promise<Response | void> {
+export default async function signIn(formData: FormData): Promise<Response|void> {
     await connectDB();
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;

@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import QueryProvider from "@/components/services/QueryProvider";
-import { Inter, Playwrite_AU_SA, Roboto_Mono } from 'next/font/google'
+import { Inter, Roboto_Mono } from 'next/font/google'
 import RecipeContextProvider from "@/context/Recipe";
 import UserContextProvider from "@/context/User";
 
@@ -11,10 +11,7 @@ const inter = Inter({
   display: 'swap',
   variable: '--font-inter',
 })
-const playwrite = Playwrite_AU_SA({
-  display: 'swap',
-  variable: '--font-playwrite-au-sa',
-})
+
 const roboto_mono = Roboto_Mono({
   subsets: ['latin'],
   display: 'swap',

@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 
 const commentSchema = new mongoose.Schema({
     comment: { type: String, required: true },
-    likes: {type: Number, default: 0},
+    likes: {type: Number, default: 0, min: 0},
+    likedBy: [String], // Array of user IDs who have liked this comment
     user: {
         id: String,
         firstname: String,

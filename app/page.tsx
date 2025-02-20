@@ -1,8 +1,7 @@
 'use client'
 
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Plus, Search, Home, User, LoaderCircle, Save } from 'lucide-react'
+import {LoaderCircle } from 'lucide-react'
 import Link from "next/link"
 import Image from "next/image"
 import { useQuery } from "@tanstack/react-query"
@@ -10,15 +9,14 @@ import { getAllRecipes, getAllRecipesTag } from "@/utils/api-fetch-functions/Rec
 import { useState } from "react"
 import CategoriesCardSkeleton from "@/components/skeleton/CategoriesCardSkeleton"
 import Header from "@/components/header/Header"
-import { Sidebar } from "@/components/sidebar-menu/sidebar"
-import { useUserContext } from "@/context/User"
+
 import Footer from "@/components/footer/Footer"
 
 
 export default function HomePage() {
   const [isMoreClicked, setisMoreClicked] = useState<boolean>(true)
 
-  const { isFetching, data, error, isError, isLoading } = useQuery({
+  const { isFetching, data,isLoading } = useQuery({
     queryKey: ['homepage'],
     queryFn: () => getAllRecipes({ pageParam: 0 }),
     refetchOnWindowFocus: false,

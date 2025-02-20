@@ -1,4 +1,10 @@
-export default function setSession(user: any) {
+export type UserSession = {
+    id: string;
+    firstname: string;
+    lastname: string;
+    email: string;
+}
+export default function setSession(user: UserSession) {
     const sessionData = {
         user: user,
         expires: Date.now() + 1000  * 60 * 60 * 24 * 7, // 30 Minuten gültig

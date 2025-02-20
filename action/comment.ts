@@ -13,6 +13,7 @@ export async function saveComment(obj: CommentType): Promise<{
     const res = await new Comment({
         comment: obj.comment,
         likes: obj.likes,
+        likedBy: obj.likedBy,
         user: {
             id: obj.user.id,
             firstname: obj.user.firstname,
@@ -34,7 +35,7 @@ export async function getComments(recipeId: number) {
 }
 
 
-export async function updateLikes(commentId: ObjectId, type: 'increase' | 'decrease') {
+export async function updateLikes(commentId: ObjectId, type: 'increase' | 'decrease', currUserID: string) {
     await connectDB();
     const comment = await Comment.findById(commentId);
 
@@ -44,16 +45,20 @@ export async function updateLikes(commentId: ObjectId, type: 'increase' | 'decre
 
     switch (type) {
         case 'increase':
-            comment.likes += 1; // Erhöhen
+            if (!comment.likedBy?.includes(currUserID)) {  // Prüfe, ob der User schon geliked hat
+                comment.likes += 1;  // Likes erhöhen
+                comment.likedBy.push(currUserID);  // User zu likedBy hinzufügen
+            }
             break;
         case 'decrease':
-            comment.likes -= 1; // Verringern
+            comment.likes -= 1;  // Likes verringern
+            comment.likedBy = comment.likedBy.filter((id: string) => id !== currUserID);  // User aus likedBy entfernen
             break;
     }
 
-    await comment.save();
+    await comment.save();  // Speichern der Änderungen in der Datenbank
 
     // Rückgabe als Objekt für das Frontend
-    return { likes: comment.likes };
+    return { likes: comment.likes, likedBy: comment.likedBy };
 }
 

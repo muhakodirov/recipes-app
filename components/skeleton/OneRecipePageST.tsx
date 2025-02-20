@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, BookmarkPlus, Clock, Users } from 'lucide-react'
+import { ArrowLeft, Clock, Users } from 'lucide-react'
 import Link from "next/link"
 
 export default function RecipeSkeleton() {

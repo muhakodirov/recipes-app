@@ -4,14 +4,14 @@ import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 export default function ProfileHeader() {
-    const { currUser, setCurrUser } = useUserContext()
+    const { currUser } = useUserContext()
     const [isVisible, setIsVisible] = useState(false)
     const router = useRouter()
     const handleSignOut = () => {
         localStorage.removeItem("userSession");
         document.cookie = "userSession=; path=/; max-age=0";
-        // setCurrUser(null);
         router.push("/");
+        setTimeout(() => window.location.reload(), 500);
     }
 
 

@@ -9,7 +9,7 @@ import { Recipe } from "@/utils/ts-types/recipes";
 import { useRecipeContext } from "@/context/Recipe";
 
 export default function ProfileTabs() {
-    const { currUser, setCurrUser } = useUserContext()
+    const { currUser } = useUserContext()
     const { savedRecipes } = useRecipeContext()
     const [activeTab, setActiveTab] = useState("posts")
     const [data, setData] = useState<Recipe[]>([])
@@ -24,7 +24,7 @@ export default function ProfileTabs() {
             setLoading(false)
         }
         fetchData()
-    }, [])
+    }, [currUser?.id])
 
 
 

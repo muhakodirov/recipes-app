@@ -3,8 +3,8 @@ import signIn from '@/action/signIn';
 import React, { useState } from 'react';
 import SubmitLogin from './Submit-Login';
 import { useUserContext } from '@/context/User';
-import { useRouter, usePathname, useSearchParams  } from 'next/navigation';
-import setSession from '@/lib/session';
+import { useRouter, useSearchParams  } from 'next/navigation';
+import setSession, { UserSession } from '@/lib/session';
 
 const LoginForm: React.FC = () => {
     const router = useRouter();
@@ -12,20 +12,21 @@ const LoginForm: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const { setCurrUser, currUser } = useUserContext();
+    const { setCurrUser } = useUserContext();
 
     const handleSubmit = async (formData: FormData) => {
         const response = await signIn(formData);
         if (response?.ok) {
             setError('');
             setCurrUser(response.user);
-            setSession(response?.user);
+            setSession(response?.user as UserSession);
             const redirect = searchParams.get('redirect') as string || '/profile';
             router.push(redirect);
         } else {
-            response?.message && setError(response?.message);
+            if (response?.message) setError(response?.message);
         }
     };
+
 
     return (
         <div className="flex justify-center items-center mt-20 ">

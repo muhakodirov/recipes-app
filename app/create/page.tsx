@@ -39,15 +39,24 @@ export default function CreateRecipe() {
   })
   
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    
-    // const response = await create(values, currUser.id)
-    const res = mutate(values)
-    // if(!response?.ok) setError(response?.message)
-      // setError('')
+      mutate(values)
   }
     const queryClient = useQueryClient()
     const { mutate } = useMutation({
-      mutationFn: (values: any) => create(values, currUser.id), // Übergib die Argumente korrekt
+      mutationFn: (values: {
+        name: string,
+        ingredients: string,
+        instructions: string,
+        prepTimeMinutes: string,
+        cookTimeMinutes: string,
+        difficulty: string,
+        servings: string,
+        calories: string,
+        mealType: string,
+        cuisine: string,
+        tags: string,
+        image: string,
+      }) => create(values, currUser.id), // Übergib die Argumente korrekt
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['allrecipes'] });
       },

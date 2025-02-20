@@ -28,18 +28,13 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/categories" className="hover:text-green-400 transition-colors">
-                  Categories
+                <Link href="/profile" className="hover:text-green-400 transition-colors">
+                  Profile
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-green-400 transition-colors">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:text-green-400 transition-colors">
-                  Contact
+                <Link href="/create" className="hover:text-green-400 transition-colors">
+                  Neues Rezept erstellen
                 </Link>
               </li>
             </ul>

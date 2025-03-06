@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import { Button } from "@/components/ui/button";
-import { Plus, Save, User } from "lucide-react";
+import { MessageCircleMore, Plus, Save, User } from "lucide-react";
 import Link from "next/link";
 import { Sidebar } from '../sidebar-menu/sidebar';
 
@@ -14,6 +14,16 @@ export default function Header() {
           <Link href="/">
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800">RecipeGram</h1>
           </Link>
+
+           {/* Desktop: Button for AI */}
+          <Link className='mx-auto hidden md:block' href="/chat">
+            <Button  className='bg-green-700 text-xl py-1 font-mono'> RecipeAI ✨ </Button>
+          </Link>
+          {/* Mobile: Button for AI */}
+          <Link className="mx-auto block md:hidden " href="/chat">
+            <MessageCircleMore size={33} fill='pink' className='py-1'/> 
+          </Link>
+
           {/* Desktop Nav-Menu*/}
           <nav className="hidden md:flex space-x-4">
             <Button variant="ghost" size="sm" asChild>

@@ -31,7 +31,6 @@ export default function HomePage() {
     staleTime: Infinity,
     retry: 0,
   })
-
   return (
     <div className="min-h-screen text-gray-900">
       <div className="max-w-7xl h-screen mx-auto flex flex-col ">
